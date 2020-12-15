@@ -3,19 +3,6 @@ import cv2
 import pickle
 import pdb
 
-def drawBbox(frame,boxes):
-
-    for box in boxes:
-        # height,width,length = pred_box['dim']
-        # x,y,z = pred_box['loc']
-        x1,y1,x2,y2 = box['bbox']
-        # height = x2-x1
-        # width = y2-y1
-        cv2.rectangle(frame,(x1,y1),(x2,y2),(255,00,0),3)
-
-
-
-
 # load bboxes
 with open('/home/lance/Desktop/jl/CenterTrack/src/tusimple1_detection.pkl', 'rb') as fp:
     pred_data = pickle.load(fp)
@@ -37,21 +24,11 @@ while(True):
     ret, frame = cap.read()
 
     if ret:
-        # Display the resulting frame
-        # cv2.imshow('frame',frame)
+        # draw 2D bbox
         pred_boxes = pred_data[cnt]
-        # drawBbox(frame,pred_boxes)
         for box in pred_boxes:
-            # height,width,length = pred_box['dim']
-            # x,y,z = pred_box['loc']
             x1,y1,x2,y2 = box['bbox']
-            # pdb.set_trace()
-            # height = x2-x1
-            # width = y2-y1
             cv2.rectangle(frame,(x1,y1),(x2,y2),(0,0,255),3)
-
-            # cv2.rectangle(frame,(x2,y2),(x1,y1),(0,255,0),3)
-            # cv2.rectangle(frame,(0,10),(100,100),(255,00,0),3)
         cv2.imshow('frame',frame)
         out.write(frame)
     else:
